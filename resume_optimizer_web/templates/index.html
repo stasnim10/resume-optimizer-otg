@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Optimizer - Web Edition</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .container-main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .card-main {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .card-header-custom {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .card-header-custom h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .card-header-custom p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .card-body-custom {
+            padding: 2rem;
+        }
+        
+        .upload-zone {
+            border: 3px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: #f8fafc;
+        }
+        
+        .upload-zone:hover {
+            border-color: var(--primary-color);
+            background: #f1f5f9;
+        }
+        
+        .upload-zone.dragover {
+            border-color: var(--success-color);
+            background: #ecfdf5;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .file-input {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .btn-custom {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+            color: white;
+        }
+        
+        .btn-custom:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .json-editor {
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            font-size: 0.9rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 300px;
+            resize: vertical;
+        }
+        
+        .json-editor:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .alert-custom {
+            border-radius: 8px;
+            border: none;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .feature-list {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .feature-item i {
+            color: var(--success-color);
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
+        
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .loading-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .example-btn {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .example-btn:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h4>Processing your resume...</h4>
+            <p class="text-muted">This may take a few seconds</p>
+        </div>
+    </div>
+
+    <div class="container-main">
+        <div class="card-main">
+            <div class="card-header-custom">
+                <h1><i class="fas fa-file-alt me-2"></i>Resume Optimizer</h1>
+                <p>Upload your resume, paste optimization JSON, and download the improved version</p>
+            </div>
+            
+            <div class="card-body-custom">
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Preserves formatting:</strong> All fonts, styles, and layouts stay intact</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>No data stored:</strong> Files are processed and deleted within 1 hour</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Full-paragraph matching:</strong> Uses strict equality for reliable replacements</span>
+                    </div>
+                </div>
+
+                <form id="optimizeForm" enctype="multipart/form-data">
+                    <!-- File Upload -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-upload me-2"></i>1. Upload Resume (.docx)
+                        </label>
+                        <div class="upload-zone" id="uploadZone">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <p class="mb-2"><strong>Click to browse</strong> or drag & drop your resume</p>
+                            <p class="text-muted small">Only .docx files accepted (max 16MB)</p>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="resumeFile" name="resume" accept=".docx" class="file-input" required>
+                            </div>
+                        </div>
+                        <div id="fileInfo" class="mt-2 text-success" style="display: none;">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <span id="fileName"></span>
+                        </div>
+                    </div>
+
+                    <!-- JSON Payload -->
+                    <div class="mb-4">
+                        <label for="jsonPayload" class="form-label fw-bold">
+                            <i class="fas fa-code me-2"></i>2. Paste Optimization JSON
+                        </label>
+                        <div class="info-box">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Use full paragraph text as anchors</strong> - not just the first few words!
+                            <a href="#" class="example-btn ms-2" id="loadExampleBtn">Load Example JSON</a>
+                        </div>
+                        <textarea 
+                            id="jsonPayload" 
+                            name="json_payload" 
+                            class="form-control json-editor" 
+                            placeholder='Paste your JSON here, e.g.:
+{
+  "summary_replacement": {
+    "match_anchor": "Full paragraph text from your resume...",
+    "replacement_text": "Optimized version..."
+  },
+  "bullet_replacements": [
+    {
+      "match_anchor": "Complete bullet point text...",
+      "replacement_text": "Enhanced bullet point..."
+    }
+  ]
+}'
+                            required
+                        ></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-custom btn-lg" id="optimizeBtn">
+                            <i class="fas fa-magic me-2"></i>Optimize Resume
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Result Display -->
+                <div id="resultArea" style="display: none; margin-top: 2rem;"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-3 text-white">
+            <p class="mb-1">
+                <i class="fas fa-github me-2"></i>
+                <a href="https://github.com/stasnim10/resume-optimizer-otg" class="text-white text-decoration-none">
+                    View on GitHub
+                </a>
+            </p>
+            <p class="small opacity-75">Also available as a desktop app for offline use</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('resumeFile');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const form = document.getElementById('optimizeForm');
+        const resultArea = document.getElementById('resultArea');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const jsonPayload = document.getElementById('jsonPayload');
+
+        // File upload handling
+        uploadZone.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                fileName.textContent = file.name;
+                fileInfo.style.display = 'block';
+            }
+        });
+
+        // Drag & drop
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                if (file.name.endsWith('.docx')) {
+                    fileInput.files = e.dataTransfer.files;
+                    fileName.textContent = file.name;
+                    fileInfo.style.display = 'block';
+                } else {
+                    showError('Please upload a .docx file');
+                }
+            }
+        });
+
+        // Load example JSON
+        document.getElementById('loadExampleBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/example-json');
+                const example = await response.json();
+                jsonPayload.value = JSON.stringify(example, null, 2);
+            } catch (error) {
+                showError('Failed to load example JSON');
+            }
+        });
+
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            
+            // Show loading
+            loadingOverlay.style.display = 'flex';
+            resultArea.style.display = 'none';
+            
+            try {
+                const response = await fetch('/optimize', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showSuccess(data.message, data.download_url);
+                } else {
+                    showError(data.error || 'An error occurred');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            } finally {
+                loadingOverlay.style.display = 'none';
+            }
+        });
+
+        function showSuccess(message, downloadUrl) {
+            resultArea.innerHTML = `
+                <div class="alert alert-success alert-custom">
+                    <h5 class="alert-heading">
+                        <i class="fas fa-check-circle me-2"></i>Success!
+                    </h5>
+                    <p>${message}</p>
+                    <hr>
+                    <a href="${downloadUrl}" class="btn btn-success">
+                        <i class="fas fa-download me-2"></i>Download Optimized Resume
+                    </a>
+                </div>
+            `;
+            resultArea.style.display = 'block';
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showError(message) {
+            resultArea.innerHTML = `
+                <div class="alert alert-danger alert-custom">
+                    <h5 class="alert-heading">
+                        <i class="fas fa-exclamation-circle me-2"></i>Error
+                    </h5>
+                    <p style="white-space: pre-wrap;">${message}</p>
+                </div>
+            `;
+            resultArea.style.display = 'block';
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

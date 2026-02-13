@@ -7,7 +7,7 @@ from typing import Dict, Any
 
 
 def extract_json_from_text(raw_text: str) -> Dict[str, Any]:
-    """
+    r"""
     Extract JSON from text using regex.
     
     Uses: re.search(r'{[\s\S]*}\s*$', raw_text)

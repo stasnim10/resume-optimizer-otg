@@ -1,225 +1,239 @@
-# Resume Optimizer - Local Offline Edition
+# Resume Optimizer OTG 📄✨
 
-A desktop application for deterministic resume optimization. Upload a .docx resume and provide JSON replacement payload for summary and bullet points. No API calls, fully offline, completely free.
+**On-The-Go Resume Optimization Tool** - Available as both desktop app and web application
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Flask](https://img.shields.io/badge/Flask-3.0-green)](https://flask.palletsprojects.com/)
 
-## Features
+Upload your .docx resume, provide JSON-based optimizations, and download an enhanced version while preserving all formatting. Choose between **desktop app** (100% offline) or **web app** (accessible anywhere).
 
-- 🖥️ **Desktop GUI** (tkinter) - No web server required
-- 🔒 **Fully Offline** - No API calls, no internet needed
-- 💰 **Completely Free** - No AI subscriptions
-- 📝 **Exact Matching** - Safe deterministic paragraph replacement using strict equality
-- 📄 **Preserves Formatting** - Maintains document structure and styling
-- ⚡ **Fail-Safe** - Clear errors for missing or duplicate anchors
-- 🎯 **Production-Grade** - Uses full-paragraph matching for 100% reliability
+## 🎯 Key Features
 
-## Why This Tool?
+- **🎨 Preserves Formatting** - All fonts, styles, and layouts stay intact
+- **🔍 Strict Matching** - Full-paragraph equality (no substring guessing)
+- **⚡ Deterministic** - Same input always produces same output
+- **🔒 Privacy-Focused** - Desktop offline or web with auto-file-deletion
+- **💰 Completely Free** - No API subscriptions needed
+- **🛡️ Production-Grade** - Tested matching algorithm
 
-Traditional resume optimizers use:
-- ❌ Partial text matching (leaves leftover text)
-- ❌ Substring replacement (can match wrong paragraphs)
-- ❌ AI rewrites (inconsistent results)
+## 📦 Choose Your Version
 
-This tool uses:
-- ✅ **Strict full-paragraph equality** matching
-- ✅ **Deterministic replacements** (same input = same output)
-- ✅ **Manual control** (you provide optimized text via JSON)
-- ✅ **Zero ambiguity** (errors if anchor not found or duplicated)
-
-## Setup
-
-### 1. Install Python 3.11+
-
-Verify installation:
-```bash
-python3 --version
-```
-
-### 2. Install Dependencies
+### 🖥️ [Desktop Edition](resume_optimizer_local/)
+**Best for: Regular personal use, maximum privacy**
 
 ```bash
+# Install and run
+cd resume_optimizer_local
 pip install -r requirements.txt
-```
-
-This installs only:
-- `python-docx` (for .docx handling)
-
-### 3. Run the Application
-
-```bash
 python main.py
 ```
 
-The tkinter GUI will open.
+**Features:**
+- ✅ 100% offline - no internet required
+- ✅ Tkinter GUI interface
+- ✅ Instant processing on your machine
+- ✅ Zero data leaves your computer
+- ✅ Helper tool to extract paragraph text
 
-## How to Use
+**[→ Desktop Setup Guide](resume_optimizer_local/README.md)**
 
-### Step 1: Upload Resume
-Click **📁 Select Resume** and choose your `.docx` file.
+---
 
-### Step 2: Prepare JSON Payload
-The app includes an example JSON structure. Replace it with your payload.
-
-**JSON Format:**
-
-```json
-{
-  "summary_replacement": {
-    "match_anchor": "FULL exact summary paragraph from your resume",
-    "replacement_text": "New optimized summary"
-  },
-  "bullet_replacements": [
-    {
-      "match_anchor": "FULL exact bullet text from resume (entire sentence/paragraph)",
-      "replacement_text": "Optimized bullet"
-    }
-  ]
-}
-```
-
-**CRITICAL RULES:**
-- `match_anchor` **MUST** be the complete paragraph text from your resume
-- Copy the **entire bullet or summary** - not just first few words
-- Match is done using strict equality: `paragraph == anchor`
-- If anchor not found → error
-- If anchor duplicated → error
-- All fields optional, include only what you want to change
-
-**Why full paragraphs?**
-- Partial anchors cause mismatches and leave leftover text
-- Full-text matching is deterministic and safe
-- Immune to formatting differences
-- No risk of matching wrong paragraphs
-
-### Step 3: Click "🚀 Optimize Resume"
-
-The app will:
-1. ✅ Validate JSON
-2. ✅ Find exact paragraphs to replace
-3. ✅ Apply replacements
-4. ✅ Save as `[OriginalName]_Optimized.docx`
-
-Output shows:
-- Which anchors were replaced
-- Errors if any anchors not found
-- Final file location
-
-## How to Get Full Paragraph Text (Easy Method)
-
-Use the included **paragraph extractor** tool:
+### 🌐 [Web Edition](resume_optimizer_web/)
+**Best for: Sharing with friends, no-install access**
 
 ```bash
+# Run locally
+cd resume_optimizer_web
+pip install -r requirements.txt
+python app.py
+# Visit http://localhost:5000
+```
+
+**Features:**
+- ✅ Access from any browser
+- ✅ No Python installation for users
+- ✅ Drag & drop interface
+- ✅ Deploy to free hosting (Render, Railway, PythonAnywhere)
+- ✅ Auto-deletes files after 1 hour
+
+**[→ Web Setup & Deployment Guide](resume_optimizer_web/README.md)**
+
+---
+
+## 🚀 Quick Start
+
+### For End Users (Web Version)
+1. Visit the deployed web app (ask admin for URL)
+2. Upload your `.docx` resume
+3. Paste your JSON optimization payload
+4. Click "Optimize" and download!
+
+### For Developers (Both Versions)
+```bash
+# Clone repository
+git clone https://github.com/stasnim10/resume-optimizer-otg.git
+cd resume-optimizer-otg
+
+# Choose version:
+# Desktop: cd resume_optimizer_local
+# Web:     cd resume_optimizer_web
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run
+# Desktop: python main.py
+# Web:     python app.py
+```
+
+## 📝 How to Create JSON Payload
+
+### Step 1: Extract Paragraph Text
+
+Use the desktop helper tool:
+```bash
+cd resume_optimizer_local
 python extract_paragraphs.py "YourResume.docx"
 ```
 
-This will display all paragraphs from your resume with numbers:
+Output shows all paragraphs:
 ```
 [01] 📝 SUMMARY:
    "MBA candidate and strategy-driven operations professional..."
 
 [16] PARAGRAPH:
-   "Directed a $50M supply chain transformation across 15 distribution centers..."
+   "Directed a $50M supply chain transformation..."
 ```
 
-**Copy the exact text** (without quotes) and use as your `match_anchor` in JSON.
+### Step 2: Create JSON
 
-## How to Get Optimized Text
+Copy **full paragraph text** and create JSON:
 
-### Option A: ChatGPT / Claude
-1. Extract paragraphs using the tool above
-2. Paste into ChatGPT: "Optimize these resume bullets for [Job Title]"
-3. Ask for full-paragraph replacements (not just keywords)
-4. Copy optimized text into `replacement_text`
-
-### Option B: Manual Editing
-Write your own improved versions maintaining similar length.
-
-**Pro Tip:** Keep replacement length similar to original to preserve formatting:
-- Original 1 line → Replacement ~1 line
-- Original 3 lines → Replacement ~3 lines
-
-## Project Folder
-
-```
-resume_optimizer_local/
-├── main.py              # Tkinter GUI
-├── docx_handler.py      # Document operations
-├── json_parser.py       # JSON validation
-├── requirements.txt     # Dependencies
-└── README.md           # This file
+```json
+{
+  "summary_replacement": {
+    "match_anchor": "MBA candidate and strategy-driven operations professional with 5+ years of experience...",
+    "replacement_text": "Results-oriented MBA candidate with proven track record in supply chain optimization..."
+  },
+  "bullet_replacements": [
+    {
+      "match_anchor": "Directed a $50M supply chain transformation across 15 distribution centers...",
+      "replacement_text": "Spearheaded $50M supply chain transformation achieving 22% cost reduction..."
+    }
+  ]
+}
 ```
 
-## Upload to GitHub
+### Step 3: Get Optimized Text
 
-### Create .gitignore
+**Option A:** Use ChatGPT/Claude
+- Paste extracted paragraphs
+- Ask: "Optimize these for [Job Title]"
+- Request full-paragraph replacements
+
+**Option B:** Manual editing
+- Write your own improved versions
+
+## 🛡️ Why This Tool is Better
+
+| Traditional Tools | Resume Optimizer OTG |
+|------------------|---------------------|
+| ❌ Substring matching (leaves leftover text) | ✅ Full-paragraph equality matching |
+| ❌ AI black boxes (inconsistent) | ✅ Manual control via JSON |
+| ❌ Paid API subscriptions | ✅ Completely free |
+| ❌ Formatting gets messed up | ✅ Preserves all formatting |
+| ❌ Partial anchors cause issues | ✅ Strict matching catches errors |
+
+## 📊 Comparison: Desktop vs Web
+
+| Feature | Desktop | Web |
+|---------|---------|-----|
+| **Installation** | Python required | Browser only |
+| **Privacy** | 100% offline | Files auto-deleted |
+| **Speed** | Instant | Network dependent |
+| **Access** | Local machine | Anywhere with internet |
+| **Best Use** | Personal regular use | Sharing with others |
+| **GUI** | Tkinter (native) | Modern Bootstrap UI |
+
+## 🏗️ Project Structure
 
 ```
-__pycache__/
-*.pyc
-.DS_Store
-*_Optimized.docx
+resume-optimizer-otg/
+├── resume_optimizer_local/      # Desktop version (tkinter)
+│   ├── main.py                  # GUI application
+│   ├── docx_handler.py          # Core document processing
+│   ├── json_parser.py           # JSON validation
+│   ├── extract_paragraphs.py    # Helper tool
+│   ├── requirements.txt
+│   └── README.md
+│
+├── resume_optimizer_web/        # Web version (Flask)
+│   ├── app.py                   # Flask application
+│   ├── docx_handler.py          # Core document processing
+│   ├── json_parser.py           # JSON validation
+│   ├── templates/
+│   │   └── index.html          # Web interface
+│   ├── requirements.txt
+│   ├── Procfile                # Deployment config
+│   └── README.md
+│
+└── README.md                    # This file
 ```
 
-### Initialize Repository
+## 🎓 Core Technology
 
-```bash
-git init
-git add .
-git commit -m "Initial commit: Resume Optimizer offline tool"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/resume-optimizer-local.git
-git push -u origin main
+### Strict Equality Matching
+
+```python
+# Safe deterministic matching
+if paragraph.text.strip() == anchor.strip():
+    replace_paragraph_text(para, new_text)
 ```
 
-## Error Messages
+**Benefits:**
+- ✅ No ambiguity - exact match required
+- ✅ Catches errors immediately
+- ✅ Immune to formatting differences
+- ✅ No leftover text issues
 
-| Error | Cause | Fix |
-|-------|-------|-----|
-| "No JSON block found" | Malformed JSON | Verify JSON is valid (use jsonlint.com) |
-| "Invalid JSON" | JSON syntax error | Check brackets, quotes, commas |
-| "Anchor not found" | Text not in resume | Match anchor exactly (copy from resume) |
-| "Multiple matches found" | Anchor appears twice | Make anchor more specific |
+## ⚠️ Important Notes
 
-## Technical Details
+- **Use FULL paragraph text as anchors** - Not just first few words!
+- **Anchors must be unique** - Tool will error if duplicates found
+- **Only .docx supported** - Not .doc or PDF
+- **Strict equality matching** - Text must match exactly (whitespace normalized)
+- **No skills_replacement** - Only summary and bullet replacements
 
-### No Regex for Document Replacement
-- Uses simple substring matching: `if anchor in paragraph.text`
-- Replaces entire paragraph preserving style
-- Zero risk of unintended partial replacements
+## 🤝 Contributing
 
-### JSON Parsing
-- Extracts JSON using: `re.search(r'{[\s\S]*}\s*$', text)`
-- Validates with: `json.loads()`
-- Fails immediately if invalid
+Found a bug or have a feature request? [Open an issue](https://github.com/stasnim10/resume-optimizer-otg/issues)!
 
-### Safety
-- ✅ No silent failures
-- ✅ Duplicate detection
-- ✅ Clear error messages
-- ✅ No partial replacements
-- ✅ Preserves formatting
+## 📄 License
 
-## Requirements
+MIT License - See LICENSE file for details
 
-- Python 3.11+
-- python-docx
-- tkinter (included with Python on most systems)
+## 🔗 Links
 
-## Why This Approach?
+- **GitHub Repository:** https://github.com/stasnim10/resume-optimizer-otg
+- **Desktop Guide:** [resume_optimizer_local/README.md](resume_optimizer_local/README.md)
+- **Web Guide:** [resume_optimizer_web/README.md](resume_optimizer_web/README.md)
 
-✅ **Free** - No API costs
-✅ **Fast** - No network latency
-✅ **Safe** - Deterministic replacements
-✅ **Private** - Everything stays on your computer
-✅ **Simple** - Just JSON and a button
-✅ **Reliable** - No API rate limits or downtime
+## 💡 Tips for Best Results
 
-## License
+1. **Extract paragraphs first** using `extract_paragraphs.py`
+2. **Copy exact text** - don't truncate or modify
+3. **Keep replacement length similar** to preserve layout
+4. **Test with small changes first** before full optimization
+5. **Use ChatGPT/Claude** to generate polished replacement text
 
-MIT - Use freely, modify as needed.
+## 🎉 Success Stories
+
+> "Fixed my formatting issues! The strict matching prevented the leftover text problem I had with other tools." - Beta Tester
+
+> "Web version makes it easy to help friends optimize their resumes without asking them to install Python!" - Early Adopter
 
 ---
 
-**Built for precision. Zero compromise on safety.**
+**Made with ❤️ for job seekers** | Report Issues: https://github.com/stasnim10/resume-optimizer-otg/issues

@@ -6,7 +6,6 @@ __pycache__/
 .Python
 env/
 venv/
-.venv/
 ENV/
 build/
 develop-eggs/
@@ -28,10 +27,9 @@ wheels/
 instance/
 .webassets-cache
 
-# Uploads and outputs
-**/uploads/*
-!**/uploads/.gitkeep
-**/*_Optimized.docx
+# Uploads
+uploads/*
+!uploads/.gitkeep
 
 # Environment
 .env
@@ -55,7 +53,3 @@ htmlcov/
 
 # Logs
 *.log
-
-# Old projects (if you want to exclude them)
-# resume_optimizer/
-# resume-replacer/

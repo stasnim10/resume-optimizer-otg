@@ -110,7 +110,7 @@ def replace_exact_paragraph(doc, anchor: str, new_text: str) -> str:
     return f"✅ Replaced: '{anchor[:60]}...'"
 
 
-def apply_replacements(doc_path: str, payload: Dict[str, Any]) -> Tuple[bool, str]:
+def apply_replacements(doc_path: str, payload: Dict[str, Any], output_path: str = None) -> Tuple[bool, str]:
     """
     Apply all replacements from payload to document.
     Preserves formatting like Word's Find & Replace.
@@ -118,6 +118,7 @@ def apply_replacements(doc_path: str, payload: Dict[str, Any]) -> Tuple[bool, st
     Args:
         doc_path: Path to .docx file
         payload: Validated replacement payload
+        output_path: Optional custom output path (for web version)
         
     Returns:
         Tuple of (success: bool, message: str)
@@ -154,11 +155,13 @@ def apply_replacements(doc_path: str, payload: Dict[str, Any]) -> Tuple[bool, st
             error_summary = "\n".join(errors)
             return False, f"Errors during replacement:\n{error_summary}"
         
-        # Save file
-        output_path = generate_output_filename(doc_path)
+        # Save file with custom path or generate default
+        if output_path is None:
+            output_path = generate_output_filename(doc_path)
+        
         doc.save(output_path)
         
-        msg = f"✅ Successfully optimized resume!\nReplaced {len(replaced_anchors)} section(s).\n📄 Saved: {output_path}"
+        msg = f"✅ Successfully optimized resume! Replaced {len(replaced_anchors)} section(s)."
         return True, msg
         
     except Exception as e:
@@ -180,5 +183,3 @@ def generate_output_filename(original_path: str) -> str:
     output_name = f"{path.stem}_Optimized{path.suffix}"
     output_path = path.parent / output_name
     return str(output_path)
-
-
