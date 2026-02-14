@@ -153,7 +153,11 @@ def example_json():
                 "match_anchor": "Led team of 8 analysts in developing predictive demand forecasting models using Python and SQL, resulting in 30% reduction in stockouts and $5M annual savings.",
                 "replacement_text": "Managed 8-person analytics team building ML-powered demand forecasting models (Python/SQL), cutting stockouts by 30% and generating $5M in annual savings."
             }
-        ]
+        ],
+        "skills_replacement": {
+            "match_anchor": "Technical Skills: Python, SQL, Excel, SAP, Tableau, Supply Chain Management, Data Analysis",
+            "replacement_text": "Technical Skills: Python, SQL, Advanced Excel, SAP ERP, Tableau, Power BI, Supply Chain Optimization, Predictive Analytics, Machine Learning"
+        }
     }
     return jsonify(example)
 

@@ -49,6 +49,7 @@ def validate_payload(payload: Dict[str, Any]) -> tuple:
     Expected keys:
     - summary_replacement (optional)
     - bullet_replacements (optional, list)
+    - skills_replacement (optional)
     
     Args:
         payload: Parsed JSON dictionary
@@ -77,6 +78,14 @@ def validate_payload(payload: Dict[str, Any]) -> tuple:
                 return False, f"❌ bullet_replacements[{idx}] must be an object"
             if "match_anchor" not in bullet or "replacement_text" not in bullet:
                 return False, f"❌ bullet_replacements[{idx}] must have match_anchor and replacement_text"
+    
+    # Check skills_replacement
+    if "skills_replacement" in payload:
+        sr = payload["skills_replacement"]
+        if not isinstance(sr, dict):
+            return False, "❌ skills_replacement must be an object"
+        if "match_anchor" not in sr or "replacement_text" not in sr:
+            return False, "❌ skills_replacement must have match_anchor and replacement_text"
     
     return True, None
 
