@@ -670,82 +670,18 @@
         /* 🌐 Footer */
         .footer {
             text-align: center;
-            padding: 4rem 1.5rem 2rem;
+            padding: 3rem 1.5rem 2rem;
             position: relative;
             z-index: 1;
         }
         
-        .footer-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            margin: 0 auto 3rem;
-            max-width: 600px;
-        }
-        
-        .founder-section {
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-        }
-        
-        .founder-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.25rem;
-            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(124, 58, 237, 0.1));
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            border-radius: 100px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(var(--blur-sm));
-        }
-        
-        .founder-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 1.25rem;
-            letter-spacing: -0.02em;
-        }
-        
-        .founder-quote {
-            font-size: 1.125rem;
-            font-style: italic;
-            color: var(--gray-400);
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            position: relative;
-            padding: 0 2rem;
-        }
-        
-        .founder-quote::before,
-        .founder-quote::after {
-            content: '"';
-            position: absolute;
-            font-size: 3rem;
-            color: rgba(0, 102, 255, 0.2);
-            font-family: Georgia, serif;
-            line-height: 1;
-        }
-        
-        .founder-quote::before {
-            left: -0.5rem;
-            top: -0.5rem;
-        }
-        
-        .founder-quote::after {
-            right: -0.5rem;
-            bottom: -1.5rem;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
+        .footer-card {
+            display: inline-block;
+            padding: 1.25rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(var(--blur-md));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
         }
         
         .footer-link {
@@ -755,39 +691,19 @@
             display: inline-flex;
             align-items: center;
             gap: 0.625rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s;
             font-size: 1rem;
-            padding: 0.75rem 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(var(--blur-md));
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
         }
         
         .footer-link:hover {
             color: var(--primary);
             gap: 0.875rem;
-            transform: translateY(-2px);
-            border-color: rgba(0, 102, 255, 0.3);
-            background: rgba(0, 102, 255, 0.05);
-            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.2);
-        }
-        
-        .footer-link.website-link {
-            background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(124, 58, 237, 0.15));
-            border-color: rgba(0, 102, 255, 0.2);
-        }
-        
-        .footer-link.website-link:hover {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            box-shadow: 0 12px 32px rgba(0, 102, 255, 0.4);
         }
         
         .footer-text {
             color: var(--gray-500);
             font-size: 0.9375rem;
-            margin-top: 2rem;
+            margin-top: 0.875rem;
         }
         
         /* 📱 Responsive */
@@ -928,31 +844,13 @@
             
             <!-- Footer -->
             <div class="footer">
-                <div class="footer-divider"></div>
-                
-                <div class="founder-section">
-                    <div class="founder-badge">
-                        <i class="fas fa-heart"></i>
-                        <span>Made by</span>
-                    </div>
-                    <h3 class="founder-name">Simum Tasnim</h3>
-                    <p class="founder-quote">
-                        Only limit is your imagination
-                    </p>
-                </div>
-                
-                <div class="footer-links">
-                    <a href="https://www.simumtasnim.com" class="footer-link website-link" target="_blank" rel="noopener">
-                        <i class="fas fa-globe"></i>
-                        <span>simumtasnim.com</span>
-                    </a>
+                <div class="footer-card">
                     <a href="https://github.com/stasnim10/resume-optimizer-otg" class="footer-link" target="_blank" rel="noopener">
                         <i class="fab fa-github"></i>
                         <span>View on GitHub</span>
                     </a>
+                    <p class="footer-text">Also available as a desktop application</p>
                 </div>
-                
-                <p class="footer-text">Also available as a desktop application</p>
             </div>
         </div>
     </div>
